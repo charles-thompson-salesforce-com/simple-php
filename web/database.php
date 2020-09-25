@@ -9,6 +9,15 @@ $result = pg_query($query) or die('Query failed: ' . pg_last_error());
 
 // Printing results in HTML
 echo "<table>\n";
+
+// printing column names
+$i = pg_num_fields($result);
+echo "\t<tr>\n";
+for ($j = 0; $j < $i; $j++) {
+  $fieldname = pg_field_name($result, $j);
+  echo "\t\t<td>$fieldname</td>\n";
+}
+
 while ($line = pg_fetch_array($result, null, PGSQL_ASSOC)) {
     echo "\t<tr>\n";
     foreach ($line as $col_value) {
